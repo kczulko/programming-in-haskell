@@ -117,8 +117,9 @@ pyths limit = [ (a,b,c) |
 -- >>> perfects 500
 -- [6,28,496]
 perfects :: Int -> [Int]
-perfects n = [ perfect | perfect <- [1..n], perfect == (sum . filter (/= perfect) . factors $ perfect) ]
-  where factors n' = [factor | factor <- [1..n'], n' `mod` factor == 0 ]
+perfects n = [ candidate | candidate <- [1..n], isPerfect candidate ]
+  where factors n' = [f | f <- [1..n'], n' `mod` f == 0 ]
+        isPerfect n' = n' == (sum . filter (/= n') . factors $ n')
 
 -- >>> scalarproduct [1..3] [4..6]
 -- 32
@@ -140,12 +141,6 @@ find k t = [b' | (k',b') <- t, k == k']
 positions2 :: Eq a => a -> [a] -> [Int]
 positions2 k t = find k (zip t [0..])
 
-
--- encode n :: map (shift n)
-
--- >>> map toLower "Haskell is Fun"
--- "haskell is fun"
-
 -- >>> encode2 (-2) $ encode2 2 "Haskell is Fun"
 -- "Haskell is Fun"
 encode2 :: Int -> String -> String
@@ -154,7 +149,7 @@ encode2 n s = result
         lowercaseInput = map toLower s
         encodeResult = encode n lowercaseInput
         uppsercasePositions = map (not . isLower) s
-        modulate :: Bool -> Char -> Char
-        modulate uppercased = if uppercased then toUpper else toLower
-        result = [modulate isUppercase c | (c,isUppercase) <- zip encodeResult uppsercasePositions ]
+        modulate cond | cond = toUpper
+                      | otherwise = toLower
+        result = [modulate isUppercase c | (c, isUppercase) <- zip encodeResult uppsercasePositions ]
 
