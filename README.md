@@ -2,7 +2,7 @@
 
 ## Progress:
 
-## Part 1: Basic concepts
+### Part 1: Basic concepts
 
 - [x] Chapter 1: Introduction
 - [x] Chapter 2: First steps
@@ -14,7 +14,7 @@
 - [ ] Chapter 8: Declaring types and classes
 - [ ] Chapter 9: The countdown problem
 
-## Part 2: Going further
+### Part 2: Going further
 
 - [ ] Chapter 10: Interactive programming
 - [ ] Chapter 11: Unbeatable tic-tac-toe
