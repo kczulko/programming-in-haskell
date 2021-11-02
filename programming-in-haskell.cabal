@@ -25,7 +25,7 @@ extra-source-files: CHANGELOG.md
 common shared-properties
   default-language: Haskell2010
   build-depends:
-    base == 4.*, mtl >= 2.2
+    base, mtl
   ghc-options:
     -Wall
                     
@@ -37,14 +37,14 @@ executable programming-in-haskell
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
-    build-depends:    base ^>=4.14.1.0
+    build-depends:    base
     hs-source-dirs:   app
     default-language: Haskell2010
 
 
 library chapters
   exposed-modules:
-      Excs1, Excs2, Excs3, Excs4, Excs5, Excs6
+      Excs1, Excs2, Excs3, Excs4, Excs5, Excs6, Excs7
   hs-source-dirs:
       chapters
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
@@ -58,8 +58,8 @@ test-suite spec
   other-modules: Excs1Spec Excs2Spec SpecHelper
   hs-source-dirs: test
   main-is: Spec.hs
-  build-tool-depends: hspec-discover:hspec-discover >= 2.7
-  build-depends: hspec >= 2.7
+  build-tool-depends: hspec-discover:hspec-discover
+  build-depends: hspec
                , chapter1
                , chapter2
                , chapter3
