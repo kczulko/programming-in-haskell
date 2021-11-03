@@ -10,7 +10,7 @@
 - [x] Chapter 4: Defining functions
 - [x] Chapter 5: List comprehensions
 - [x] Chapter 6: Recursive functions
-- [ ] Chapter 7: Higher order functions
+- [x] Chapter 7: Higher order functions
 - [ ] Chapter 8: Declaring types and classes
 - [ ] Chapter 9: The countdown problem
 
