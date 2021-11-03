@@ -158,4 +158,4 @@ altMap f g xs = [fg x | (fg,x) <- zip functions xs]
 -- >>> luhn [4,7,8,3]
 -- False
 luhn :: [Int] -> Bool
-luhn = (== 0). (`mod` 10). sum . altMap luhnDouble id
+luhn = (== 0) . (`mod` 10) . sum . altMap luhnDouble id
