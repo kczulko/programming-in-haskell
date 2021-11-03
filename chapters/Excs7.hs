@@ -143,10 +143,6 @@ firstBitFailureChannel [] = []
 firstBitFailureChannel bits@(h:t) | h == 0 = 1 : t
                                   | otherwise = bits
 
-
-items :: [String -> [Bit]]
-items = encode : items
-
 -- >>> altMap (+10) (+100) [0..6]
 -- [10,101,12,103,14,105,16]
 altMap :: (a -> b) -> (a -> b) -> [a] -> [b]
