@@ -112,4 +112,4 @@ take' n l@(x:xs) | n > 0 = x : take' (n-1) xs
 last' :: [a] -> a
 last' [] = error "No such element"
 last' [x] = x
-last' (x:xs) = last' xs
+last' (_:xs) = last' xs
