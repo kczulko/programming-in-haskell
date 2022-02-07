@@ -12,7 +12,7 @@
 - [x] Chapter 6: Recursive functions
 - [x] Chapter 7: Higher order functions
 - [x] Chapter 8: Declaring types and classes
-- [ ] Chapter 9: The countdown problem
+- [x] Chapter 9: The countdown problem
 
 ### Part 2: Going further
 
