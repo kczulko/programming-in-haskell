@@ -41,6 +41,11 @@ executable programming-in-haskell
     hs-source-dirs:   app
     default-language: Haskell2010
 
+executable excs9
+    main-is:          MainExcs9.hs
+    build-depends:    base, chapters
+    hs-source-dirs:   app
+    default-language: Haskell2010
 
 library chapters
   exposed-modules:

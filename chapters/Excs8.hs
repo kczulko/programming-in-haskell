@@ -1,4 +1,5 @@
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module Excs8 where
 
 data Nat = Zero | Succ Nat deriving (Show, Eq, Ord)
