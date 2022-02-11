@@ -12,6 +12,8 @@ next Two = One
 
 type Board = [Int]
 
+data Board1 = Board1 { elems :: [Int], rows :: Int}
+
 -- >>> initial
 -- [5,4,3,2,1]
 initial :: Board

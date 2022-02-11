@@ -47,7 +47,6 @@ executable excs9
     hs-source-dirs:   app
     default-language: Haskell2010
 
-
 executable excs10hangman
     main-is:          MainExcs10.hs
     build-depends:    base, chapters
@@ -62,6 +61,12 @@ executable excs10nim
 
 executable excs10gameoflife
     main-is:          MainExcs10GameOfLife.hs
+    build-depends:    base, chapters
+    hs-source-dirs:   app
+    default-language: Haskell2010
+
+executable excs10adder
+    main-is:          MainExcs10Adder.hs
     build-depends:    base, chapters
     hs-source-dirs:   app
     default-language: Haskell2010
