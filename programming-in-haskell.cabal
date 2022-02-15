@@ -71,6 +71,12 @@ executable excs10adder
     hs-source-dirs:   app
     default-language: Haskell2010
 
+executable excs11
+    main-is:          MainExcs11.hs
+    build-depends:    base, chapters
+    hs-source-dirs:   app
+    default-language: Haskell2010
+    
 library chapters
   exposed-modules:
       Excs1, Excs2, Excs3, Excs4, Excs5, Excs6, Excs7, Excs8, Excs9
