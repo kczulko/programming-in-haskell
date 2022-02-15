@@ -76,5 +76,47 @@ chop :: Int -> [a] -> [[a]]
 chop n [] = []
 chop n xs = take n xs : chop n (drop n xs)
 
+
+
+getNat :: String -> IO Int
+getNat prompt = do _ <- putStrLn prompt
+                   xs <- getLine
+                   if xs /= [] && all isDigit xs then
+                     return (read xs)
+                   else
+                     do putStrLn "ERROR: Invalid number"
+                        getNat prompt
+
+type Pos = (Int,Int)
+
+cls :: IO ()
+cls = putStr "\ESC[2J"
+
+goto :: Pos -> IO ()
+goto (x,y) = putStr ("\ESC[" ++ show y ++ ";" ++ show x ++ "H")
+
+run :: Grid -> Player -> IO ()
+run g p = do cls
+             goto (1,1)
+             putGrid g
+             run' g p
+
+run' :: Grid -> Player -> IO ()
+run' g p | wins O g = putStrLn "Player O wins!"
+         | wins X g = putStrLn "Player X wins!"
+         | full g   = putStrLn "It's a draw!"
+         | otherwise =
+           do i <- getNat (prompt p)
+              case move g i p of
+                [] -> do putStrLn "ERROR: Invalid move"
+                         run' g p
+                g':_ -> run g' (next p)
+
+prompt :: Player -> String
+prompt p = "Player " ++ show p ++ ", enter your move: "
+
+tictactoe :: IO ()
+tictactoe = run empty O
+
 main :: IO ()
-main = putStrLn "hello world"
+main = tictactoe
