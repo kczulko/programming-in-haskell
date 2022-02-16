@@ -78,8 +78,6 @@ chop :: Int -> [a] -> [[a]]
 chop n [] = []
 chop n xs = take n xs : chop n (drop n xs)
 
-
-
 getNat :: String -> IO Int
 getNat prompt = do _ <- putStrLn prompt
                    xs <- getLine
@@ -160,6 +158,14 @@ bestmove2 g p =
        bmove <- randomRIO (0, length bmoves - 1)
        return (bmoves !! bmove)
 
+bestmove3 :: Grid -> Player -> Grid
+bestmove3 g p = fst (last shallowFirst)
+  where
+    shallowFirst = sortOn snd candidates
+    candidates = [(g', countdepth n) | n @ (Node (g',p') _) <- ts, p' == best]
+    tree = prune depth (gametree g p)
+    Node (_,best) ts = minimax tree
+
 -- main :: IO ()
 -- main = tictactoe
 
@@ -171,16 +177,16 @@ play g p = do cls
 
 play' :: Grid -> Player -> IO ()
 play' g p | wins O g = putStrLn "Player O wins!\n"
-         | wins X g = putStrLn "Player X wins!\n"
-         | full g   = putStrLn "It's a draw!\n"
-         | p == O = do i <- getNat (prompt p)
-                       case move g i p of
-                         [] -> do putStrLn "Error: Invalid move"
-                                  play' g p
-                         g':_ -> play g' (next p)
-         | p == X = do putStrLn "Player X is thinking..."
-                       bmove <- bestmove2 g p
-                       play bmove (next p)
+          | wins X g = putStrLn "Player X wins!\n"
+          | full g   = putStrLn "It's a draw!\n"
+          | p == O = do i <- getNat (prompt p)
+                        case move g i p of
+                          [] -> do putStrLn "Error: Invalid move"
+                                   play' g p
+                          g':_ -> play g' (next p)
+          | p == X = do putStrLn "Player X is thinking..."
+                        -- let bmove = bestmove g p
+                        (play $! bestmove g p) (next p)
 
 -- >>> countnodes (gametree empty O)
 -- 549946
@@ -196,4 +202,9 @@ countdepth (Node a ns) = 1 + maximum (map countdepth ns)
 
 main :: IO ()
 main = do hSetBuffering stdout NoBuffering
-          play empty O
+          putStrLn "Do you want to start? (type 'yes' or 'no')"
+          str <- getLine
+          case str of
+            "yes" -> play empty O
+            "no"  -> play empty X
+            _     -> main
