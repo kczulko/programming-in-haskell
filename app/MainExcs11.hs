@@ -1,8 +1,10 @@
+{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 module Main where
 
 import Data.Char
 import Data.List
 import System.IO
+import System.Random (randomRIO)
 
 size :: Int
 size = 3
@@ -118,5 +120,80 @@ prompt p = "Player " ++ show p ++ ", enter your move: "
 tictactoe :: IO ()
 tictactoe = run empty O
 
+data Tree a = Node a [Tree a] deriving Show
+
+gametree :: Grid -> Player -> Tree Grid
+gametree g p = Node g [gametree g' (next p) | g' <- moves g p]
+
+moves :: Grid -> Player -> [Grid]
+moves g p | won g = []
+          | full g = []
+          | otherwise = concat [move g i p | i <- [0..((size^2)-1)]]
+
+prune :: Int -> Tree a -> Tree a
+prune 0 (Node x _) = Node x []
+prune n (Node x ts) = Node x [prune (n-1) t | t <- ts]
+
+depth :: Int
+depth = 9
+
+minimax :: Tree Grid -> Tree (Grid, Player)
+minimax (Node g []) | wins O g = Node (g,O) []
+                    | wins X g = Node (g,X) []
+                    | otherwise = Node (g,B) []
+minimax (Node g ts) | turn g == O = Node (g, minimum ps) ts'
+                    | turn g == X = Node (g, maximum ps) ts'
+                      where ts' = map minimax ts
+                            ps = [p | Node (_,p) _ <- ts']
+
+bestmove :: Grid -> Player -> Grid
+bestmove g p = head [g' | Node (g',p') _ <- ts, p' == best]
+  where
+    tree = prune depth (gametree g p)
+    Node (_,best) ts = minimax tree
+
+bestmove2 :: Grid -> Player -> IO Grid
+bestmove2 g p =
+    do let tree = prune depth (gametree g p)
+       let Node (_,best) ts = minimax tree
+       let bmoves = [g' | Node (g',p') _ <- ts, p' == best]
+       bmove <- randomRIO (0, length bmoves - 1)
+       return (bmoves !! bmove)
+
+-- main :: IO ()
+-- main = tictactoe
+
+play :: Grid -> Player -> IO ()
+play g p = do cls
+              goto (1,1)
+              putGrid g
+              play' g p
+
+play' :: Grid -> Player -> IO ()
+play' g p | wins O g = putStrLn "Player O wins!\n"
+         | wins X g = putStrLn "Player X wins!\n"
+         | full g   = putStrLn "It's a draw!\n"
+         | p == O = do i <- getNat (prompt p)
+                       case move g i p of
+                         [] -> do putStrLn "Error: Invalid move"
+                                  play' g p
+                         g':_ -> play g' (next p)
+         | p == X = do putStrLn "Player X is thinking..."
+                       bmove <- bestmove2 g p
+                       play bmove (next p)
+
+-- >>> countnodes (gametree empty O)
+-- 549946
+countnodes :: Tree a -> Int
+countnodes (Node a []) = 1
+countnodes (Node a (n:ns)) = 1 + countnodes n + sum [countnodes n' | n' <- ns]
+
+-- >>> countdepth (gametree empty O)
+-- 9
+countdepth :: Tree a -> Int
+countdepth (Node a []) = 0
+countdepth (Node a ns) = 1 + maximum (map countdepth ns)
+
 main :: IO ()
-main = tictactoe
+main = do hSetBuffering stdout NoBuffering
+          play empty O

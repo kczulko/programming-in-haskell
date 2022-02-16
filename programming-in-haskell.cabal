@@ -73,7 +73,7 @@ executable excs10adder
 
 executable excs11
     main-is:          MainExcs11.hs
-    build-depends:    base, chapters
+    build-depends:    base, chapters, random
     hs-source-dirs:   app
     default-language: Haskell2010
     
