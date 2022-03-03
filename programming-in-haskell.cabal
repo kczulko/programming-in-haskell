@@ -79,7 +79,7 @@ executable excs11
     
 library chapters
   exposed-modules:
-      Excs1, Excs2, Excs3, Excs4, Excs5, Excs6, Excs7, Excs8, Excs9
+      Excs1, Excs2, Excs3, Excs4, Excs5, Excs6, Excs7, Excs8, Excs9, Excs12
   hs-source-dirs:
       chapters
   ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
