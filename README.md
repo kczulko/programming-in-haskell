@@ -18,7 +18,7 @@
 
 - [x] Chapter 10: Interactive programming
 - [x] Chapter 11: Unbeatable tic-tac-toe
-- [ ] Chapter 12: Monad and more
+- [x] Chapter 12: Monad and more
 - [ ] Chapter 13: Monadic parser
 - [ ] Chapter 14: Foldables and friends
 - [ ] Chapter 15: Lazy evaluation
