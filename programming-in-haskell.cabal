@@ -76,6 +76,12 @@ executable excs11
     build-depends:    base, chapters, random
     hs-source-dirs:   app
     default-language: Haskell2010
+
+executable excs13
+    main-is:          MainExcs13.hs
+    build-depends:    base, chapters, random
+    hs-source-dirs:   app
+    default-language: Haskell2010
     
 library chapters
   exposed-modules:
