@@ -79,10 +79,20 @@ executable excs11
 
 executable excs13
     main-is:          MainExcs13.hs
-    build-depends:    base, chapters, random
+    build-depends:    base, chapters, random, console
     hs-source-dirs:   app
     default-language: Haskell2010
-    
+
+library console
+  exposed-modules:
+      Lib
+  hs-source-dirs:
+      console
+  ghc-options: -Wall -Werror -Wcompat -Widentities -Wincomplete-uni-patterns -Wincomplete-record-updates -Wno-unused-top-binds -Wno-orphans
+  build-depends:
+      base
+  default-language: Haskell2010
+
 library chapters
   exposed-modules:
       Excs1, Excs2, Excs3, Excs4, Excs5, Excs6, Excs7, Excs8, Excs9, Excs12, Excs13
