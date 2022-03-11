@@ -21,6 +21,6 @@
 - [x] Chapter 12: Monad and more
 - [x] Chapter 13: Monadic parser
 - [x] Chapter 14: Foldables and friends
-- [ ] Chapter 15: Lazy evaluation
+- [x] Chapter 15: Lazy evaluation
 - [ ] Chapter 16: Reasoning about programs
 - [ ] Chapter 17: Calculating compilers
